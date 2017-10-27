@@ -1,0 +1,24 @@
+[
+  {
+    "name": "koa-blog",
+    "script": "server/start.js",
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "256M",
+    "autorestart": true,
+    "error_file": "server/logs/app-err.log",
+    "out_file": "server/logs/app-out.log",
+    "ignoreWatch": ["[\\/\\\\]\\./", "node_modules"],
+    "pid_file": "server/logs/koa-blog.pid",
+    "env_dev": {
+      "NODE_ENV": "development"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    }
+  }
+  // pm2 install pm2-logrotate
+  // pm2 set pm2-logrotate:retain 100
+  // pm2 set pm2-logrotate:size 1M
+]
