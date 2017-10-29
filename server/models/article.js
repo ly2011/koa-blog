@@ -1,13 +1,13 @@
 // 文章
-import mongoose from 'mongoose';
-import moment from 'moment';
-moment.locale('zh-cn');
+import mongoose from "mongoose";
+import moment from "moment";
+moment.locale("zh-cn");
 const Schema = mongoose.Schema;
 const articleSchema = new Schema(
   {
     author_id: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User"
     },
     title: { type: String, unique: true },
     content: { type: String },
@@ -17,7 +17,7 @@ const articleSchema = new Schema(
     tags: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Tag'
+        ref: "Tag"
       }
     ],
     // 存储文章所用到的图片
@@ -63,13 +63,13 @@ const articleSchema = new Schema(
   },
   { versionKey: false }
 );
-articleSchema.set('toJSON', { getters: true, virtuals: true });
-articleSchema.set('toObject', { getters: true, virtuals: true }); //普通+虚拟
-articleSchema.path('createTime').get(v => moment(v).format('lll'));
-articleSchema.path('publishTime').get(v => moment(v).format('lll'));
-articleSchema.path('lastEditTime').get(v => moment(v).format('lll'));
+articleSchema.set("toJSON", { getters: true, virtuals: true });
+articleSchema.set("toObject", { getters: true, virtuals: true }); //普通+虚拟
+articleSchema.path("createTime").get(v => moment(v).format("lll"));
+articleSchema.path("publishTime").get(v => moment(v).format("lll"));
+articleSchema.path("lastEditTime").get(v => moment(v).format("lll"));
 
-articleSchema.virtual('info').get(() => {
+/* articleSchema.virtual('info').get(() => {
   return {
     _id: this._id,
     title: this.title,
@@ -80,8 +80,8 @@ articleSchema.virtual('info').get(() => {
     like_count: this.like_count,
     publishTime: this.publishTime
   };
-});
+}); */
 
-const Article = mongoose.model('Article', articleSchema);
+const Article = mongoose.model("Article", articleSchema);
 
 export default Article;

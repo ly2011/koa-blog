@@ -5,6 +5,7 @@ import Router from "koa-router";
 import json from "koa-json";
 import bodyParser from "koa-bodyparser";
 import logger from "koa-logger";
+import cors from "koa-cors";
 
 import config from "./configs";
 import api from "./api";
@@ -19,6 +20,17 @@ onerror(app, {
 const router = Router();
 
 // middlewares
+app.use(
+  convert(
+    cors({
+      origin: "*",
+      credentials: true,
+      maxAge: 86400000,
+      methods: "OPTIONS, GET, PUT, POST, DELETE",
+      headers: "x-requested-with, accept, origin, content-type"
+    })
+  )
+);
 app.use(
   bodyParser({
     enableTypes: ["json", "form", "text"]

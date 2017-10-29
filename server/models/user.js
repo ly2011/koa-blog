@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
@@ -29,53 +29,53 @@ const UserSchema = new Schema(
   },
   { versionKey: false }
 );
-UserSchema.set('toJSON', { getters: true, virtuals: true });
-UserSchema.set('toObject', { getters: true, virtuals: true }); //普通+虚拟
+UserSchema.set("toJSON", { getters: true, virtuals: true });
+UserSchema.set("toObject", { getters: true, virtuals: true }); //普通+虚拟
 
 // 虚拟
-UserSchema.virtual('hashedPassword')
-  .set(password => {
-    this._password = password;
-  })
-  .get(() => {
-    return this._password;
-  });
+// UserSchema.virtual('hashedPassword')
+//   .set(password => {
+//     this._password = password;
+//   })
+//   .get(() => {
+//     return this._password;
+//   });
 
-UserSchema.virtual('userInfo').get(() => {
-  return {
-    username: this.username,
-    email: this.email,
-    avatar: this.avatar
-  };
+/* UserSchema.virtual('userInfo').get(() => {
+	return {
+		username: this.username,
+		email: this.email,
+		avatar: this.avatar
+	};
 });
 
 // 验证字段
 UserSchema.path('username').validate({
-  isAsync: true,
-  validator(v, cb) {
-    const self = this;
-    self.constructor.findOne({ username: v }, (err, user) => {
-      if (user && self.id !== user.id) {
-        cb(false);
-      }
-      cb(true);
-    });
-  },
-  message: '这个昵称已经被使用!'
+	isAsync: true,
+	validator(v, cb) {
+		const self = this;
+		self.constructor.findOne({ username: v }, (err, user) => {
+			if (user && self.id !== user.id) {
+				cb(false);
+			}
+			cb(true);
+		});
+	},
+	message: '这个昵称已经被使用!'
 });
 UserSchema.path('email').validate({
-  isAsync: true,
-  validator(v, cb) {
-    const self = this;
-    self.constructor.findOne({ email: v }, (err, user) => {
-      if (user && self.id !== user.id) {
-        cb(false);
-      }
-      cb(true);
-    });
-  },
-  message: '这个邮箱已经被使用!'
-});
+	isAsync: true,
+	validator(v, cb) {
+		const self = this;
+		self.constructor.findOne({ email: v }, (err, user) => {
+			if (user && self.id !== user.id) {
+				cb(false);
+			}
+			cb(true);
+		});
+	},
+	message: '这个邮箱已经被使用!'
+}); */
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 export default User;
