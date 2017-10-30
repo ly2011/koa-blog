@@ -1,9 +1,9 @@
-import Router from "koa-router";
-import compose from "koa-compose";
-import importDir from "import-dir";
-import config from "../configs";
+import Router from 'koa-router';
+import compose from 'koa-compose';
+import importDir from 'import-dir';
+import config from '../configs';
 
-const routes = importDir("./routes");
+const routes = importDir('./routes');
 
 export default () => {
   const router = new Router({

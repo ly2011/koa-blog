@@ -1,19 +1,19 @@
-import Koa from "koa";
-import convert from "koa-convert";
-import onerror from "koa-onerror";
-import Router from "koa-router";
-import json from "koa-json";
-import bodyParser from "koa-bodyparser";
-import logger from "koa-logger";
-import cors from "koa-cors";
+import Koa from 'koa';
+import convert from 'koa-convert';
+import onerror from 'koa-onerror';
+import Router from 'koa-router';
+import json from 'koa-json';
+import bodyParser from 'koa-bodyparser';
+import logger from 'koa-logger';
+import cors from 'koa-cors';
 
-import config from "./configs";
-import api from "./api";
+import config from './configs';
+import api from './api';
 
 const app = new Koa();
 onerror(app, {
   accepts() {
-    return "json";
+    return 'json';
   }
 });
 
@@ -23,23 +23,23 @@ const router = Router();
 app.use(
   convert(
     cors({
-      origin: "*",
+      origin: '*',
       credentials: true,
       maxAge: 86400000,
-      methods: "OPTIONS, GET, PUT, POST, DELETE",
-      headers: "x-requested-with, accept, origin, content-type"
+      methods: 'OPTIONS, GET, PUT, POST, DELETE',
+      headers: 'x-requested-with, accept, origin, content-type'
     })
   )
 );
 app.use(
   bodyParser({
-    enableTypes: ["json", "form", "text"]
+    enableTypes: ['json', 'form', 'text']
   })
 );
 app.use(json());
 app.use(logger());
 
-import "./models/mongodb";
+import './connect_mongo';
 
 // 导入路由
 
@@ -52,7 +52,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-router.use("/favicon.ico", ctx => {
+router.use('/favicon.ico', ctx => {
   return;
 });
 
@@ -64,13 +64,17 @@ app.use(api());
 // router.use("/comment", comments.routes(), comments.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
-app.on("error", err => {
+app.on('error', err => {
   // console.error(err);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  console.error('Unhandled Rejection at: Promise ', p, ' reason: ', reason);
 });
 
 // create server
 app.listen(config.app.port, () => {
-  console.log("The server is running at http://localhost:" + config.app.port);
+  console.log('The server is running at http://localhost:' + config.app.port);
 });
 
 export default app;

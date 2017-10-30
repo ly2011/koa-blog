@@ -1,8 +1,6 @@
 {
   "restartable": "rs",
-  "watch": [
-    "src"
-  ],
+  "watch": ["server"],
   "verbose": true,
   "execMap": {
     "js": "node --harmony"

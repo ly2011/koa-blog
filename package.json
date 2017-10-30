@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node server/start.js",
+    "start": "cross-env NODE_ENV=development node server/start.js",
     "dev": "nodemon server/start.js",
     "pm2": "npm run build && pm2 start pm2.json --env production",
     "precommit": "lint-staged"
@@ -28,7 +28,7 @@
     "koa-router": "^7.2.1",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.1"
+    "mongoose": "^4.12.5"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

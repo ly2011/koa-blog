@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import moment from 'moment';
 moment.locale('zh-cn');
 const Schema = mongoose.Schema;
-const commentSchema = new Schema(
+const CommentSchema = new Schema(
   {
     article_id: { type: Schema.Types.ObjectId, ref: 'Article' },
     user_id: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -34,10 +34,10 @@ const commentSchema = new Schema(
   { versionKey: false }
 );
 
-commentSchema.set('toJSON', { getters: true, virtuals: true });
-commentSchema.set('toObject', { getters: true, virtuals: true }); //普通+虚拟
-commentSchema.path('createTime').get(v => moment(v).format('lll'));
-commentSchema.path('lastEditTime').get(v => moment(v).format('lll'));
+CommentSchema.set('toJSON', { getters: true, virtuals: true });
+CommentSchema.set('toObject', { getters: true, virtuals: true }); //普通+虚拟
+CommentSchema.path('createTime').get(v => moment(v).format('lll'));
+CommentSchema.path('lastEditTime').get(v => moment(v).format('lll'));
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = mongoose.model('Comment', CommentSchema);
 export default Comment;
