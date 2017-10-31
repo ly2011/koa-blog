@@ -53,7 +53,7 @@ export async function createArticle(ctx) {
       data: createResult
     };
   } catch (err) {
-    ctx.throw(500, '服务器错误');
+    ctx.throw(500, err.errmsg);
   }
 }
 
@@ -73,7 +73,10 @@ export async function getArticles(ctx) {
       })
       .skip(start_row)
       .limit(page_size)
-      .exec();
+      .exec()
+      .catch(err => {
+        ctx.throw(500, '服务器内部错误');
+      });
     const count = await Article.count();
     ctx.body = {
       success: true,
@@ -167,7 +170,13 @@ export async function deleteArticle(ctx) {
     return;
   }
   try {
-    await Article.findByIdAndRemove(id);
+    await Article.findByIdAndRemove(id).catch(err => {
+      if (err.name === 'CastError') {
+        ctx.throw(401, '文章id不存在');
+      } else {
+        ctx.throw(500, '服务器错误');
+      }
+    });
     await Comment.remove({ article_id: id });
     ctx.body = {
       success: true,

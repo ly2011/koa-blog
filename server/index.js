@@ -6,6 +6,8 @@ import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
 import cors from 'koa-cors';
+import session from 'koa-generic-session';
+import redisStore from 'koa-redis';
 
 import config from './configs';
 import api from './api';
@@ -38,6 +40,20 @@ app.use(
 );
 app.use(json());
 app.use(logger());
+
+// session
+app.keys = [config.session.secrets];
+app.use(
+  session({
+    key: 'koa.sid',
+    store: redisStore({
+      host: config.redis.host,
+      port: config.redis.port,
+      auth_pass: config.redis.password || ''
+    }),
+    cookie: config.session.cookie
+  })
+);
 
 import './connect_mongo';
 

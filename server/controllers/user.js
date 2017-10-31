@@ -18,7 +18,7 @@ const checkUser = validator.isObject().withRequired(
  */
 export async function getCaptcha(ctx) {
   const { token, buffer } = await captcha({ size: 6 });
-  // ctx.session.captcha = token;
+  ctx.session.captcha = token;
   ctx.status = 200;
   ctx.body = buffer;
 }
@@ -123,6 +123,7 @@ export async function createUser(ctx) {
 }
 
 export async function listUser(ctx) {
+  console.log('session: ', ctx.session);
   try {
     const users = await User.find();
     ctx.body = {

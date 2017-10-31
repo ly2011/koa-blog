@@ -15,9 +15,15 @@ const config = {
   },
   // redis 配置
   redis: {
+    db: 0,
     host: process.env.REDIS_PORT_6379_TCP_ADDR || '127.0.0.1',
     port: process.env.REDIS_PORT_6379_TCP_PORT || 6379,
     password: process.env.REDIS_PASSWORD || ''
+  },
+  // session 配置
+  session: {
+    secrets: 'koa-blog-secret',
+    cookie: { maxAge: 60000 * 60 * 24 * 365 }
   },
   jwt: {
     secret: 'me' //默认
