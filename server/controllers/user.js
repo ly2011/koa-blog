@@ -142,11 +142,10 @@ export async function login(ctx) {
   const username = ctx.request.body.username;
   let password = ctx.request.body.password;
   if (!username || !password) {
-    ctx.body = {
+    return (ctx.body = {
       status: 401,
       message: '用户名或密码为空'
-    };
-    return;
+    });
   }
   password = md5(password).toUpperCase();
   try {

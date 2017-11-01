@@ -120,7 +120,13 @@ export async function updateArticle(ctx) {
         $set: update_article
       },
       { new: true }
-    );
+    ).catch(err => {
+      if (err.name === 'CastError') {
+        ctx.throw(401, '文章id不存在');
+      } else {
+        ctx.throw(500, '服务器内部错误');
+      }
+    });
     ctx.body = {
       success: true,
       message: '更新文章成功',
@@ -148,7 +154,14 @@ export async function getArticle(ctx) {
   try {
     const article = await Article.findById(id)
       .populate('tags')
-      .exec();
+      .exec()
+      .catch(err => {
+        if (err.name === 'CastError') {
+          ctx.throw(401, '文章id不存在');
+        } else {
+          ctx.throw(500, '服务器内部错误');
+        }
+      });
     ctx.status = 200;
     ctx.body = {
       success: true,

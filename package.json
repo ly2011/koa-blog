@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "koa-blog-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -54,9 +54,6 @@
     "prettier": "^1.5.2"
   },
   "lint-staged": {
-    "server/**/*.js": [
-      "prettier --write",
-      "git add"
-    ]
+    "server/**/*.js": ["prettier --write", "git add"]
   }
 }
